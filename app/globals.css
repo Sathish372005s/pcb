@@ -2,25 +2,78 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111827; /* Dark gray for high-contrast professional text */
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  
+  /* PCB Company Custom Colors */
+  --color-pcb-green: #41AB5D;
+  --color-pcb-green-light: #A1D99B;
+  --color-pcb-green-dark: #2C7A41;
+  --color-pcb-green-soft: #F0FDF4; /* Very light tint of green for hover card backgrounds */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Base style resets */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Custom modern interactive styles and animations */
+@keyframes draw-trace {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes pulse-glow {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(65, 171, 93, 0.4));
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.3);
+    filter: drop-shadow(0 0 8px rgba(65, 171, 93, 0.9));
+    opacity: 1;
+  }
 }
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(1deg);
+  }
+}
+
+.animate-draw-trace {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-trace 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s infinite ease-in-out;
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+/* Animated grid lines pattern background */
+.pcb-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(65, 171, 93, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(65, 171, 93, 0.04) 1px, transparent 1px);
+}
+
